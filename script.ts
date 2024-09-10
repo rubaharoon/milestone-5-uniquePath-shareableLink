@@ -17,11 +17,13 @@ document.getElementById("resumeForm")?.addEventListener("submit", function(event
     const certificationsElement = document.getElementById(`certifications`) as HTMLInputElement;
     const hobbiesElement = document.getElementById(`hobbies`) as HTMLInputElement;
     const usernameElement = document.getElementById(`username`) as HTMLInputElement;
+    
 
+    
     //Check if all form elements are present
 
     if (profilePictureInput && nameElement && contactElement && emailElement && addressElement && ageElement && educationElement && WorkexperienceElement && skillsElement && certificationsElement && hobbiesElement && usernameElement) {
-        
+    
         const name = nameElement.value;
         const contact = contactElement.value;
         const email = emailElement.value;
@@ -34,6 +36,7 @@ document.getElementById("resumeForm")?.addEventListener("submit", function(event
         const hobbies = hobbiesElement.value;
         const username = usernameElement.value;
         const uniquePath = `resumes/${username.replace(/\s+/g, '_')}_cv.html`
+        const resumePDFPath = `resumes/${username.replace(/\s+/g, '_')}_cv.pdf`
 
         //picture elements
 
@@ -72,13 +75,33 @@ document.getElementById("resumeForm")?.addEventListener("submit", function(event
     downloadLink.download = uniquePath;
     downloadLink.textContent = `Download Your 2024Resume`;
 
+
+
     //Display Resume Output
 
     const resumeOutputElement = document.getElementById(`resumeOutput`);
     if (resumeOutputElement) {
         resumeOutputElement.innerHTML = resumeOutput;
-
         resumeOutputElement.appendChild(downloadLink);
+        resumeOutputElement.classList.remove("hidden");
+
+        //Create container for buttons
+
+        const buttonContainer = document.createElement(`div`);
+        buttonContainer.id = `buttonContainer`;
+        resumeOutputElement.appendChild(buttonContainer);
+
+        //Add download PDF Button:
+
+        const downloadPDFButton = document.createElement(`button`);
+        downloadPDFButton.textContent = `Download PDF`;
+        downloadPDFButton.addEventListener(`click`, () => {
+            window.print();
+        });
+
+        buttonContainer.appendChild(downloadPDFButton);
+
+       
 
         resumeOutputElement.style.display = `block`;
     } 
@@ -89,6 +112,7 @@ document.getElementById("resumeForm")?.addEventListener("submit", function(event
         console.error(`One or more output elements are missing.`);
     }
 
+    
 });
 
 

@@ -30,6 +30,7 @@ var _a;
         var hobbies = hobbiesElement.value;
         var username = usernameElement.value;
         var uniquePath = "resumes/".concat(username.replace(/\s+/g, '_'), "_cv.html");
+        var resumePDFPath = "resumes/".concat(username.replace(/\s+/g, '_'), "_cv.pdf");
         //picture elements
         var profilePictureFile = (_a = profilePictureInput.files) === null || _a === void 0 ? void 0 : _a[0];
         var profilePictureURL = profilePictureFile ? URL.createObjectURL(profilePictureFile) : "";
@@ -44,6 +45,18 @@ var _a;
         if (resumeOutputElement) {
             resumeOutputElement.innerHTML = resumeOutput;
             resumeOutputElement.appendChild(downloadLink);
+            resumeOutputElement.classList.remove("hidden");
+            //Create container for buttons
+            var buttonContainer = document.createElement("div");
+            buttonContainer.id = "buttonContainer";
+            resumeOutputElement.appendChild(buttonContainer);
+            //Add download PDF Button:
+            var downloadPDFButton = document.createElement("button");
+            downloadPDFButton.textContent = "Download PDF";
+            downloadPDFButton.addEventListener("click", function () {
+                window.print();
+            });
+            buttonContainer.appendChild(downloadPDFButton);
             resumeOutputElement.style.display = "block";
         }
     }
